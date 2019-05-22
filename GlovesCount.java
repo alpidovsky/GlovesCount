@@ -2,11 +2,11 @@
  * Created by Alexander Alpidovskiy on 20.05.2019.
  */
 /*
-В мешке находится 24 белые перчатки и 20 чёрных перчаток.
-Перчатки достают из мешка парами.
-Если достали пару перчаток одного цвета, то в мешок кладут чёрную перчатку.
-Если достали пару перчаток разного цвета, то в мешок кладут белую перчатку.
-Какого цвета окажется перчатка, которая останется в мешке последней?
+Р’ РјРµС€РєРµ РЅР°С…РѕРґРёС‚СЃСЏ 24 Р±РµР»С‹Рµ РїРµСЂС‡Р°С‚РєРё Рё 20 С‡С‘СЂРЅС‹С… РїРµСЂС‡Р°С‚РѕРє.
+РџРµСЂС‡Р°С‚РєРё РґРѕСЃС‚Р°СЋС‚ РёР· РјРµС€РєР° РїР°СЂР°РјРё.
+Р•СЃР»Рё РґРѕСЃС‚Р°Р»Рё РїР°СЂСѓ РїРµСЂС‡Р°С‚РѕРє РѕРґРЅРѕРіРѕ С†РІРµС‚Р°, С‚Рѕ РІ РјРµС€РѕРє РєР»Р°РґСѓС‚ С‡С‘СЂРЅСѓСЋ РїРµСЂС‡Р°С‚РєСѓ.
+Р•СЃР»Рё РґРѕСЃС‚Р°Р»Рё РїР°СЂСѓ РїРµСЂС‡Р°С‚РѕРє СЂР°Р·РЅРѕРіРѕ С†РІРµС‚Р°, С‚Рѕ РІ РјРµС€РѕРє РєР»Р°РґСѓС‚ Р±РµР»СѓСЋ РїРµСЂС‡Р°С‚РєСѓ.
+РљР°РєРѕРіРѕ С†РІРµС‚Р° РѕРєР°Р¶РµС‚СЃСЏ РїРµСЂС‡Р°С‚РєР°, РєРѕС‚РѕСЂР°СЏ РѕСЃС‚Р°РЅРµС‚СЃСЏ РІ РјРµС€РєРµ РїРѕСЃР»РµРґРЅРµР№?
 */
 
 import java.io.BufferedReader;
@@ -16,121 +16,180 @@ import java.util.Random;
 
 public class GlovesCount {
     public static void main(String[] args) throws Exception {
+        int white; // РљРѕР»РёС‡РµСЃС‚РІРѕ Р±РµР»С‹С… РїРµСЂС‡Р°С‚РѕРє
+        int black; // РљРѕР»РёС‡РµСЃС‚РІРѕ С‡РµСЂРЅС‹С… РїРµСЂС‡Р°С‚РѕРє
+        int iteration; // РЎС‡РµС‚С‡РёРє РєРѕР»РёС‡РµСЃРІР° С†РёРєР»РѕРІ
 
-        // Задаем количество перчаток
-        int white = 0;
-        int black = 0;
-        int iteration = 0; // Счетчик количесва циклов
+        // РњР°СЃСЃРёРІС‹, РёР· РєРѕС‚РѕСЂС‹С… СЃР»СѓС‡Р°Р№РЅРѕ РІС‹Р±РёСЂР°РµС‚СЃСЏ РѕРґРёРЅ СЌР»РµРјРµРЅС‚
+        String[] stringArray = {"Р§Р•Р РќР«Р•", "Р‘Р•Р›Р«Р•", "Р РђР—РќР«Р•"};
+        String[] stringArrayWhites = {"Р‘Р•Р›Р«Р•", "Р РђР—РќР«Р•"};
+        String[] stringArrayBlacks = {"Р§Р•Р РќР«Р•", "Р РђР—РќР«Р•"};
 
-        // Массивы, из которых случайно выбирается один элемент
-        String[] stringArray = {"Черные", "Белые", "Разные"};
-        String[] stringArrayWhites = {"Белые", "Разные"};
-        String[] stringArrayBlacks = {"Черные", "Разные"};
-
-        String random = null;
+        String random = null; // РџРµСЂРµРјРµРЅРЅР°СЏ, РІ РєРѕС‚РѕСЂСѓСЋ Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ СЃР»СѓС‡Р°Р№РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+        String again; // РџРµСЂРµРјРµРЅРЅР°СЏ РѕРїСЂРµРґРµР»СЏРµС‚, РїРѕРІС‚РѕСЂРёС‚СЊ Р»Рё СЂРµС€РµРЅРёРµ Р·Р°РґР°С‡Рё РµС‰Рµ СЂР°Р·
+        String log; // РџРµСЂРµРјРµРЅРЅР°СЏ
+        boolean yn;
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("(c) 2019 Александр Андреевич Альпидовский. GlovesCount v0.4.");
+        System.out.println("(c) 2019 РђР»РµРєСЃР°РЅРґСЂ РђРЅРґСЂРµРµРІРёС‡ РђР»СЊРїРёРґРѕРІСЃРєРёР№. РџСЂРѕРіСЂР°РјРјР° GlovesCount v0.5.");
         System.out.println("");
-        System.out.println("Данная программа решает математическую задачу о количестве перчаток в мешке.");
-        System.out.println("Условия задачи:");
-        System.out.println("В мешке находится X белых перчаток и Y чёрных перчаток.");
-        System.out.println("Перчатки достают из мешка парами.");
-        System.out.println("Если достали пару перчаток одного цвета, то в мешок кладут чёрную перчатку.");
-        System.out.println("Если достали пару перчаток разного цвета, то в мешок кладут белую перчатку.");
-        System.out.println("Какого цвета окажется перчатка, которая останется в мешке последней?");
+        System.out.println("Р”Р°РЅРЅР°СЏ РїСЂРѕРіСЂР°РјРјР° СЂРµС€Р°РµС‚ Р·Р°РґР°С‡Сѓ Рѕ С†РІРµС‚Рµ РїРѕСЃР»РµРґРЅРµР№ РїРµСЂС‡Р°С‚РєРё РІ РјРµС€РєРµ.");
         System.out.println("");
+        System.out.println("РЈСЃР»РѕРІРёСЏ Р·Р°РґР°С‡Рё:");
+        System.out.println("Р’ РјРµС€РєРµ РЅР°С…РѕРґРёС‚СЃСЏ X Р±РµР»С‹С… РїРµСЂС‡Р°С‚РѕРє Рё Y С‡С‘СЂРЅС‹С… РїРµСЂС‡Р°С‚РѕРє.");
+        System.out.println("РџРµСЂС‡Р°С‚РєРё РґРѕСЃС‚Р°СЋС‚ РёР· РјРµС€РєР° РїР°СЂР°РјРё.");
+        System.out.println("Р•СЃР»Рё РґРѕСЃС‚Р°Р»Рё РїР°СЂСѓ РїРµСЂС‡Р°С‚РѕРє РѕРґРЅРѕРіРѕ С†РІРµС‚Р°, С‚Рѕ РІ РјРµС€РѕРє РєР»Р°РґСѓС‚ С‡С‘СЂРЅСѓСЋ РїРµСЂС‡Р°С‚РєСѓ.");
+        System.out.println("Р•СЃР»Рё РґРѕСЃС‚Р°Р»Рё РїР°СЂСѓ РїРµСЂС‡Р°С‚РѕРє СЂР°Р·РЅРѕРіРѕ С†РІРµС‚Р°, С‚Рѕ РІ РјРµС€РѕРє РєР»Р°РґСѓС‚ Р±РµР»СѓСЋ РїРµСЂС‡Р°С‚РєСѓ.");
+        System.out.println("РљР°РєРѕРіРѕ С†РІРµС‚Р° РѕРєР°Р¶РµС‚СЃСЏ РїРµСЂС‡Р°С‚РєР°, РєРѕС‚РѕСЂР°СЏ РѕСЃС‚Р°РЅРµС‚СЃСЏ РІ РјРµС€РєРµ РїРѕСЃР»РµРґРЅРµР№?");
 
-        // Вводим количество перчаток
-        System.out.println("Пожалуйста, введите количество БЕЛЫХ перчаток (X):");
-        try {
-            white = Integer.parseInt(reader.readLine());
-        } catch (Exception e) {
-            System.err.println("Ошибка! Вы ввели недопустимый символ! Запустите программу заново и введите целое число!");
-            throw new Exception(e);
-        }
-        System.out.println("Пожалуйста, введите количество ЧЕРНЫХ перчаток (Y):");
-        try {
-            black = Integer.parseInt(reader.readLine());
-        } catch (Exception e) {
-            System.err.println("Ошибка! Вы ввели недопустимый символ! Запустите программу заново и введите целое число!");
-            throw new Exception(e);
-        }
-        System.out.println("");
-
-        // Переменные для указания в конце, перед ответом
-        int whiteStart = white;
-        int blackStart = black;
-
-        // Печатаем начальные заданные условия
-        System.out.println("Всего в мешке " + white + " белых перчаток и " + black + " черных.");
-        System.out.println("");
-
-        // Основной цикл задачи
+        // Р¦РёРєР», РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЂРµС€РёС‚ РїРѕРїСЂРѕР±РѕРІР°С‚СЊ СЂРµС€РёС‚СЊ Р·Р°РґР°С‡Сѓ РµС‰Рµ СЂР°Р· СЃ РґСЂСѓРіРёРјРё РґР°РЅРЅС‹РјРё
         while (true) {
-            int idx = new Random().nextInt(stringArray.length);
-            int idw = new Random().nextInt(stringArrayWhites.length);
-            int idb = new Random().nextInt(stringArrayBlacks.length);
-
-            if ((black == 1 && white == 0) || (white == 1 && black == 0)) { // Условие остановки цикла
-                break;
-            } else if (black == 1 && white == 1) {
-                random = "Разные";
-                black--;
-            } else if (black == 1 && white >= 2) {
-                random = (stringArrayWhites[idw]);
-                if (Objects.equals(random, "Белые")) {
-                    white = white - 2;
-                    black++;
-                } else if (Objects.equals(random, "Разные")) {
-                    black--;
+            // Р’РІРѕРґРёРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂС‡Р°С‚РѕРє
+            while (true) {
+                System.out.println("");
+                System.out.println("РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р‘Р•Р›Р«РҐ РїРµСЂС‡Р°С‚РѕРє (X):");
+                try {
+                    white = Integer.parseInt(reader.readLine());
+                    System.out.println("РџСЂРёРЅСЏС‚Рѕ. РљРѕР»РёС‡РµСЃС‚РІРѕ Р±РµР»С‹С… РїРµСЂС‡Р°С‚РѕРє РІ РјРµС€РєРµ - " + white);
+                    break;
+                } catch (Exception e) {
+                    System.out.println("РћРЁРР‘РљРђ! Р’С‹ РІРІРµР»Рё РЅРµРґРѕРїСѓСЃС‚РёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ! Р’РІРµРґРёС‚Рµ С†РµР»РѕРµ С‡РёСЃР»Рѕ!");
                 }
-            } else if (black == 0 && white >= 2) {
-                random = "Белые";
-                white = white - 2;
-                black++;
-            } else if (black >= 2 && white == 1) {
-                random = (stringArrayBlacks[idb]);
-                if (Objects.equals(random, "Черные")) {
-                    black--;
-                } else if (Objects.equals(random, "Разные")) {
-                    black--;
-                }
-            } else if (black >= 2 && white == 0) {
-                random = "Черные";
-                black--;
-            } else if (black >= 2 && white >= 2) {
-                random = (stringArray[idx]);
-                if (Objects.equals(random, "Черные")) {
-                    black--;
-                } else if (Objects.equals(random, "Разные")) {
-                    black--;
-                } else if (Objects.equals(random, "Белые")) {
-                    white = white - 2;
-                    black++;
+            }
+            while (true) {
+                System.out.println("РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р§Р•Р РќР«РҐ РїРµСЂС‡Р°С‚РѕРє (Y):");
+                try {
+                    black = Integer.parseInt(reader.readLine());
+                    System.out.println("РџСЂРёРЅСЏС‚Рѕ. РљРѕР»РёС‡РµСЃС‚РІРѕ С‡РµСЂРЅС‹С… РїРµСЂС‡Р°С‚РѕРє РІ РјРµС€РєРµ - " + black);
+                    break;
+                } catch (Exception e) {
+                    System.out.println("РћРЁРР‘РљРђ! Р’С‹ РІРІРµР»Рё РЅРµРґРѕРїСѓСЃС‚РёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ! Р’РІРµРґРёС‚Рµ С†РµР»РѕРµ С‡РёСЃР»Рѕ!");
                 }
             }
 
-            iteration++;
+            // РџРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ СѓРєР°Р·Р°РЅРёСЏ РІ РєРѕРЅС†Рµ, РїРµСЂРµРґ РѕС‚РІРµС‚РѕРј
+            int whiteStart = white;
+            int blackStart = black;
+            iteration = 0; // РЎР±СЂРѕСЃ СЃС‡РµС‚С‡РёРєР° С†РёРєР»РѕРІ
 
-            System.out.println("Действие №: " + iteration);
-            System.out.println("Забрали две " + random + " перчатки");
-            System.out.println("Осталось: БЕЛЫХ - " + white + ", ЧЕРНЫХ - " + black);
+            // РџРµС‡Р°С‚Р°РµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ Р·Р°РґР°РЅРЅС‹Рµ СѓСЃР»РѕРІРёСЏ
             System.out.println("");
-        }
+            System.out.println("Р’СЃРµРіРѕ РІ РјРµС€РєРµ: Р‘Р•Р›Р«РҐ РїРµСЂС‡Р°С‚РѕРє - " + white + ", Р§Р•Р РќР«РҐ РїРµСЂС‡Р°С‚РѕРє - " + black);
+            System.out.println("");
 
-        System.out.println("------");
-        System.out.println("Изначальное количество перчаток в мешке: белых - " + whiteStart + ", черных - " + blackStart);
-        System.out.println("Какого цвета перчатка осталась в мешке последней?");
-        System.out.println("ОТВЕТ:");
-        if (white == 1 && black == 0) {
-            System.out.println("Последней в мешке оказалась БЕЛАЯ перчатка.");
-        } else if (black == 1 && white == 0) {
-            System.out.println("Последней в мешке оказалась ЧЕРНАЯ перчатка.");
+            System.out.println("РџСЂРѕРіСЂР°РјРјР° РјРѕР¶РµС‚ РѕС‚РѕР±СЂР°Р·РёС‚СЊ СЃРїРёСЃРѕРє РІСЃРµС… РґРµР№СЃС‚РІРёР№.");
+            System.out.println("РљР°Р¶РґРѕРµ РґРµР№СЃС‚РІРёРµ, РєРѕРіРґР° РґРѕСЃС‚Р°СЋС‚ Рё РєР»Р°РґСѓС‚ РїРµСЂС‡Р°С‚РєРё, РѕС‚РѕР±СЂР°Р·РёС‚СЃСЏ РІ СЃРїРёСЃРєРµ.");
+            System.out.println("Р’С‹ СѓРІРёРґРёС‚Рµ РЅРѕРјРµСЂ РґРµР№СЃС‚РІРёСЏ, С†РІРµС‚ РїРµСЂС‡Р°С‚РѕРє, РєРѕС‚РѕСЂС‹Рµ РґРѕСЃС‚Р°Р»Рё РёР· РјРµС€РєР°,");
+            System.out.println("РєР°РєРѕРіРѕ С†РІРµС‚Р° РїРµСЂС‡Р°С‚РєСѓ РїРѕР»РѕР¶РёР»Рё РѕР±СЂР°С‚РЅРѕ,");
+            System.out.println("Рё СЃРєРѕР»СЊРєРѕ РїРµСЂС‡Р°С‚РѕРє РѕСЃС‚Р°Р»РѕСЃСЊ РІ РјРµС€РєРµ РїРѕСЃР»Рµ СЌС‚РѕРіРѕ.");
+            System.out.println("Р•СЃР»Рё РІРІРµРґРµС‚Рµ N, РїРѕР»СѓС‡РёС‚Рµ РѕС‚РІРµС‚ РЅР° Р·Р°РґР°С‡Сѓ СЃСЂР°Р·Сѓ Р±РµР· СЃРїСЃРєР° РґРµР№СЃС‚РІРёР№.");
+            System.out.println("");
+            System.out.println("РҐРѕС‚РёС‚Рµ, С‡С‚РѕР±С‹ РїСЂРѕРіСЂР°РјРјР° РѕС‚РѕР±СЂР°Р·РёР»Р° СЃРїРёСЃРѕРє РІСЃРµС… РґРµР№СЃС‚РІРёР№? [Y(РґР°)/N(РЅРµС‚)]");
+            while (true) {
+                log = reader.readLine();
+                if (Objects.equals(log, "y") || Objects.equals(log, "Y")) {
+                    yn = true;
+                    break;
+                } else if (Objects.equals(log, "n") || Objects.equals(log, "N")) {
+                    yn = false;
+                    break;
+                } else {
+                    System.out.println("РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ! РҐРѕС‚РёС‚Рµ, С‡С‚РѕР±С‹ РїСЂРѕРіСЂР°РјРјР° РѕС‚РѕР±СЂР°Р·РёР»Р° СЃРїРёСЃРѕРє РґРµР№СЃС‚РІРёР№? [Y(РґР°)/N(РЅРµС‚)]");
+                }
+            }
+
+            // РћСЃРЅРѕРІРЅРѕР№ С†РёРєР» Р·Р°РґР°С‡Рё
+            while (true) {
+                int idx = new Random().nextInt(stringArray.length);
+                int idw = new Random().nextInt(stringArrayWhites.length);
+                int idb = new Random().nextInt(stringArrayBlacks.length);
+
+                if ((black == 1 && white == 0) || (white == 1 && black == 0)) { // РЈСЃР»РѕРІРёРµ РѕСЃС‚Р°РЅРѕРІРєРё С†РёРєР»Р°
+                    break;
+                } else if (black == 1 && white == 1) {
+                    random = "Р РђР—РќР«Р•";
+                    black--;
+                } else if (black == 1 && white >= 2) {
+                    random = (stringArrayWhites[idw]);
+                    if (Objects.equals(random, "Р‘Р•Р›Р«Р•")) {
+                        white = white - 2;
+                        black++;
+                    } else if (Objects.equals(random, "Р РђР—РќР«Р•")) {
+                        black--;
+                    }
+                } else if (black == 0 && white >= 2) {
+                    random = "Р‘Р•Р›Р«Р•";
+                    white = white - 2;
+                    black++;
+                } else if (black >= 2 && white == 1) {
+                    random = (stringArrayBlacks[idb]);
+                    if (Objects.equals(random, "Р§Р•Р РќР«Р•")) {
+                        black--;
+                    } else if (Objects.equals(random, "Р РђР—РќР«Р•")) {
+                        black--;
+                    }
+                } else if (black >= 2 && white == 0) {
+                    random = "Р§Р•Р РќР«Р•";
+                    black--;
+                } else if (black >= 2 && white >= 2) {
+                    random = (stringArray[idx]);
+                    if (Objects.equals(random, "Р§Р•Р РќР«Р•")) {
+                        black--;
+                    } else if (Objects.equals(random, "Р РђР—РќР«Р•")) {
+                        black--;
+                    } else if (Objects.equals(random, "Р‘Р•Р›Р«Р•")) {
+                        white = white - 2;
+                        black++;
+                    }
+                }
+
+                iteration++;
+
+                if (yn) {
+                    System.out.println("Р”РµР№СЃС‚РІРёРµ в„–: " + iteration);
+                    System.out.print("Р—Р°Р±СЂР°Р»Рё РґРІРµ " + random + " РїРµСЂС‡Р°С‚РєРё");
+                    if (Objects.equals(random, "Р‘Р•Р›Р«Р•") || Objects.equals(random, "Р§Р•Р РќР«Р•")) {
+                        System.out.println(" Рё РїРѕР»РѕР¶РёР»Рё РѕР±СЂР°С‚РЅРѕ РѕРґРЅСѓ Р§Р•Р РќРЈР®.");
+                    } else {
+                        System.out.println(" Рё РїРѕР»РѕР¶РёР»Рё РѕР±СЂР°С‚РЅРѕ РѕРґРЅСѓ Р‘Р•Р›РЈР®.");
+                    }
+                    System.out.println("РћСЃС‚Р°Р»РѕСЃСЊ: Р‘Р•Р›Р«РҐ - " + white + ", Р§Р•Р РќР«РҐ - " + black);
+                    System.out.println("");
+                }
+            }
+
+            System.out.println("----------");
+            System.out.println("РР·РЅР°С‡Р°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂС‡Р°С‚РѕРє РІ РјРµС€РєРµ: Р‘Р•Р›Р«РҐ - " + whiteStart + ", Р§Р•Р РќР«РҐ - " + blackStart);
+            System.out.println("Р’РћРџР РћРЎ:");
+            System.out.println("РљР°РєРѕРіРѕ С†РІРµС‚Р° РїРµСЂС‡Р°С‚РєР° РѕСЃС‚Р°Р»Р°СЃСЊ РІ РјРµС€РєРµ РїРѕСЃР»РµРґРЅРµР№?");
+            System.out.println("РћРўР’Р•Рў:");
+            if (white == 1 && black == 0) {
+                System.out.println("РџРѕСЃР»РµРґРЅРµР№ РІ РјРµС€РєРµ РѕРєР°Р·Р°Р»Р°СЃСЊ Р‘Р•Р›РђРЇ РїРµСЂС‡Р°С‚РєР°.");
+            } else if (black == 1 && white == 0) {
+                System.out.println("РџРѕСЃР»РµРґРЅРµР№ РІ РјРµС€РєРµ РѕРєР°Р·Р°Р»Р°СЃСЊ Р§Р•Р РќРђРЇ РїРµСЂС‡Р°С‚РєР°.");
+            }
+            System.out.println("----------");
+            System.out.println("");
+            System.out.println("РҐРѕС‚РёС‚Рµ РІС‹РїРѕР»РЅРёС‚СЊ СЂРµС€РµРЅРёРµ СЃ РґСЂСѓРіРёРјРё РґР°РЅРЅС‹РјРё? [Y(РґР°)/N(РЅРµС‚)]");
+            while (true) {
+                again = reader.readLine();
+                if (Objects.equals(again, "y") || Objects.equals(again, "Y")) {
+                    yn = true;
+                    break;
+                } else if (Objects.equals(again, "n") || Objects.equals(again, "N")) {
+                    yn = false;
+                    break;
+                } else {
+                    System.out.println("РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ! РҐРѕС‚РёС‚Рµ СЂРµС€РёС‚СЊ Р·Р°РґР°С‡Сѓ РµС‰Рµ СЂР°Р·? [Y(РґР°)/N(РЅРµС‚)]");
+                }
+            }
+            if (!yn) {
+                break; // РЈСЃР»РѕРІРёРµ Р·Р°РІРµСЂС€РµРЅРёСЏ РїСЂРѕРіСЂР°РјРјС‹
+            }
         }
-        System.out.println("------");
         System.out.println("");
-        System.out.println("(c) 2019 Александр Андреевич Альпидовский. GlovesCount v0.4.");
+        System.out.println("(c) 2019 РђР»РµРєСЃР°РЅРґСЂ РђРЅРґСЂРµРµРІРёС‡ РђР»СЊРїРёРґРѕРІСЃРєРёР№. РџСЂРѕРіСЂР°РјРјР° GlovesCount v0.5.");
+        System.out.println("");
     }
 }
