@@ -85,13 +85,37 @@ public class GlovesCount {
             System.out.println("и сколько перчаток осталось в мешке после этого.");
             System.out.println("Если введете N, получите ответ на задачу сразу без спска действий.");
             System.out.println("");
-            System.out.println("Хотите, чтобы программа отобразила список всех действий? [Y(да)/N(нет)]");
+            System.out.println("Хотите, чтобы программа отобразила список всех действий? [Y(да)/N(нет)/PANDA]");
             while (true) {
                 log = reader.readLine();
                 if (Objects.equals(log, "y") || Objects.equals(log, "Y")) {
                     yn = true;
                     break;
                 } else if (Objects.equals(log, "n") || Objects.equals(log, "N")) {
+                    yn = false;
+                    break;
+                } else if (Objects.equals(log, "panda") || Objects.equals(log, "PANDA")) {
+                    System.out.println("________________d88888b_____________d888b");
+                    System.out.println("_______________d88888888b__________d888888b");
+                    System.out.println("_______________d8888888b\"\"\"\"\"\"\"\"\"8888 8888b");
+                    System.out.println("________88\"\"\"888P\"_________________88888P");
+                    System.out.println("____888____8888_________________________\"8,");
+                    System.out.println("___88_____8888_______88888_______________\"8,");
+                    System.out.println("__888____d88888_____8888888______88888____\"8,");
+                    System.out.println("_8888____8888888_____888888_____8888888___\"8");
+                    System.out.println("_88888___8888888______888_______888888___\"8,");
+                    System.out.println("_888888___88888I88_______________888____\"8,");
+                    System.out.println("__888888___888I888888_____88888________88,");
+                    System.out.println("___8888888__888888888888__\"\"'''___8888888,");
+                    System.out.println("___888888888_88888888888888_\"\"_88888888888");
+                    System.out.println("___8888888888888888888888888888888Id888888");
+                    System.out.println("____888888888888888888888888888888888888b");
+                    System.out.println("_____888888888_8888888888b____88888888888");
+                    System.out.println("______88888888__8888888888_____8888888888");
+                    System.out.println("_______8888888__8888888888_____ad8888888");
+                    System.out.println("________888888b__888888888______8888888");
+                    System.out.println("__________________8888888");
+                    System.out.println("");
                     yn = false;
                     break;
                 } else {
